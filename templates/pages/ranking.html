@@ -1,0 +1,75 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: Ranking
+{% endblock %}
+
+{% block content %}
+<div class="ui centered grid">
+	<div class="ui raised segment column">
+		<h1 style="font-family: San Francisco; text-align: center;">^RENA's Warriors Leaderboard</h1>
+		<div class="ui divider"></div>
+		<div class="ui segment">
+			<div class="ui two column very relaxed grid">
+				<div class="column">
+					<form action="/ranking/" method="post">
+						{% csrf_token %}
+						<h3 style="font-family: San Francisco;">Filter By</h3>
+						<select name="filter-tags" class="ui fluid search dropdown" multiple="" id="filter-tags">
+							<option value="" style="font-family: San Francisco;">Filter tags</option>
+							<option value="rev-rating" style="font-family: San Francisco;">Rating from lowest</option>
+							<option value="rating" style="font-family: San Francisco;">Rating from highest</option>
+						</select>
+						<br>
+						<button type="submit" style="float: right; font-family: San Francisco; width: 150px;" class="ui labeled blue icon button">
+							<i class="filter icon"></i>
+							Filter
+						</button>
+					</form>
+				</div>
+				<div class="column">
+					<form class="ui form" action="/ranking/" method="post">
+						{% csrf_token %}
+						<h3 style="font-family: San Francisco;">Search user</h3>
+						<input style="font-family: San Francisco;" type="text" name="search-user" placeholder="Search user" required>
+						<br><br>
+						<button type="submit" style="float: right; font-family: San Francisco; width: 150px;" class="ui labeled blue icon button">
+							<i class="search icon"></i>
+							Search
+						</button>
+					</form>
+				</div>
+			</div>
+			<div class="ui vertical divider">or</div>
+		</div>
+		<div class="ui divider"></div>
+		<table class="ui celled padded table" style="font-family: San Francisco; font-size: 18px; text-align: center;">
+			<thead>
+				<tr>
+					<th style="width: 70px;" class="single line">Rank</th>
+					<th>Name</th>
+					<th style="width: 20px;">Ratings</th>
+					<th style="width: 20px;">Win Rate</th>
+					<th style="width: 20px;">Solved</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for prof in ranking_list %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td class="single line">
+						<a href="/profile/{{ prof.user.username }}/" style="color: {{ prof.color }};"><b>{{ prof.user.username }}</b></a>
+					</td>
+					<td style="color: {{ prof.color }};">
+						<b>{{ prof.ratings }}</b>
+					</td>
+					<td>{{ prof.total_ratio }}%</td>
+					<td>{{ prof.total_problems }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">$("#filter-tags").dropdown();</script>
+{% endblock %}

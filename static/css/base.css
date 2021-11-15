@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "San Francisco";
+	src: url("../font/SanFranciscoText-Medium.woff") format("woff");
+}
+.ui {
+	font-family: San Francisco;
+}
+button {
+	font-family: San Francisco;
+}
+.field {
+	font-family: San Francisco;
+}

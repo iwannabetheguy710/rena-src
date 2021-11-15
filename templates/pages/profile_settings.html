@@ -1,0 +1,56 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: Profile settings
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+<div class="ui grid">
+	<div class="sixteen wide raised segments column">
+		<div class="ui segment">
+			<h1>Edit user's profile</h1>
+			<div class="ui divider"></div>
+			<form class="ui large form" action="/profile/settings/" method="post">
+				{% csrf_token %}
+				<div class="field">
+					<label style="font-size: 16px;">Name:</label>
+					<div class="two fields">
+						<div class="field">
+							<input type="text" name="firstname" placeholder="First Name" style="font-family: San Francisco;" value="{{ ufirstname }}">
+						</div>
+						<div class="field">
+							<input type="text" name="lastname" placeholder="Last Name" style="font-family: San Francisco;" value="{{ ulastname }}">
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<label style="font-size: 16px;">Slogan:</label>
+					<input type="text" name="slogan" placeholder="Your slogan. Limit 50 characters." style="font-family: San Francisco;" value="{{ pslogan }}">
+				</div>
+				<div class="ui divider"></div>
+				<h3>User's social</h3>
+				<div class="ui divider"></div>
+				<div class="field">
+					<div class="two fields">
+						<div class="field">
+							<label style="font-size: 16px;">Facebook:</label>
+							<input type="text" name="social-facebook" placeholder="Facebook link" style="font-family: San Francisco;" value="{{ pfacebook }}">
+						</div>
+						<div class="field">
+							<label style="font-size: 16px;">Github:</label>
+							<input type="text" name="social-github" placeholder="Github link" style="font-family: San Francisco;" value="{{ pgithub }}">
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="ui labeled blue icon button" style="float: right; font-family: San Francisco;">
+					<i class="checkmark icon"></i>
+					Submit
+				</button>
+			</form>
+			<br><br>
+		</div>
+	</div>
+</div>
+{% endblock %}

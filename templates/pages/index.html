@@ -1,0 +1,47 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: Judge Nhà Làm
+{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load martortags %}
+<div class="ui grid" style="font-family: San Francisco;">
+	<div class="eleven wide segments raised column">
+		{% for newfeed in feed_blog %}
+		<div class="ui segment">
+			<div style="padding: 15px 30px;">
+				<h1 style="font-family: San Francisco; font-size: 30px;"><a href="/blog/entry/{{ newfeed.entry_id }}/" style="color: black;">{{ newfeed.title }}</a></h1>
+				<label style="float: right;">{{ newfeed.publish_date }}</label>
+				<span style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<label style="float: right;">
+					<i class="eye icon"></i>
+					{{ newfeed.viewed }}
+				</label>
+				<p>
+					by&nbsp;
+					<b><a href="/profile/{{ newfeed.author }}/" style="color: {{ newfeed.author.color }};">{{ newfeed.author }}</a>&nbsp;</b>
+				</p>
+				<div class="ui divider"></div>
+				<span style="font-size: 16px;">{{ newfeed.content | safe_markdown }}</span>
+			</div>
+			<br>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="five wide segments raised column">
+		<div class="ui segment">
+			<h3 style="font-family: San Francisco;">Newest Problem</h3>
+			{% for prob in newest_prob %}
+			<li><a href="/problem/{{ prob.problem_id }}/">{{ prob.title }}</a>&nbsp;&nbsp;-&nbsp;&nbsp;<a href="/profile/{{ prob.author }}" style="color: {{ prob.author.color }};"><b>{{ prob.author }}</b></a></li>
+			{% endfor %}
+			<h3 style="font-family: San Francisco">Newest Blog</h3>
+			{% for b in newest_blog %}
+			<li><a href="/blog/entry/{{ b.entry_id }}">{{ b.title }}</a>&nbsp;-&nbsp;<a href="/profile/{{ b.author }}" style="color: {{ b.author.color }};"><b>{{ b.author }}</b></a></li></li>
+			{% endfor %}
+			<br>
+		</div>
+	</div>
+</div>
+{% endblock %}

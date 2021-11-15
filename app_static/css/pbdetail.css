@@ -1,0 +1,7 @@
+.CodeMirror * {
+	font-family: "Consolas", "DejaVu Sans Mono";
+	font-size: 14px;
+}
+.CodeMirror-linenumber * {
+	font-size: 14px;
+}

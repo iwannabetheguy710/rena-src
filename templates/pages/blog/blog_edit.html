@@ -1,0 +1,92 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: Edit Blog
+{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load martortags %}
+
+<script type="text/javascript" src="{% static 'css/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/jquery.redirect.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/components/dropdown.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/components/transition.min.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+	$("#blog_title").on("input propertychange", function() {
+		$("#pre-blog-title").text($("#blog_title").val());
+		$.ajax({
+			url: '/martor/markdownify/',
+			type: 'POST',
+			data: {
+				csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+				content: $("#blog_content").val(),
+			}
+		}).done(function(res) {
+			$("#pre-blog-content").html(res);
+			$("#pre-blog-title").text($("#blog_title").val());
+		});
+	});
+	$("#blog_content").on("input propertychange", function() {
+		$.ajax({
+			url: '/martor/markdownify/',
+			type: 'POST',
+			data: {
+				csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+				content: $("#blog_content").val(),
+			}
+		}).done(function(res) {
+			$("#pre-blog-content").html(res);
+			$("#pre-blog-title").text($("#blog_title").val());
+		});
+	});
+});
+</script>
+<script type="text/javascript">
+	$("#delete-submit").popup();
+</script>
+
+<div class="ui grid">
+	<div class="sixteen wide raised segments column">
+		<div class="ui segment">
+			<h1 style="font-family: San Francisco; text-align: center;">Edit your blog post</h1>
+			<form class="ui large form" action="/blog/entry/{{ blog.entry_id }}/edit/" method="post">
+				{% csrf_token %}
+				<div class="field">
+					<label>Title:</label>
+					<input id="blog_title" type="text" name="blog_title" placeholder="Enter your blog title here" style="font-family: San Francisco;" value="{{ blog.title }}" required>
+				</div>
+				<div class="field">
+					<label>Description:</label>
+					<textarea id="blog_content" name="blog_content" type="text" placeholder="Enter your blog content here" style="font-family: San Francisco;" requied>{{ blog.content }}</textarea>
+				</div>
+				<button class="ui labeled  blue icon button" style="float: right;">
+					<i class="check icon"></i>
+					Submit
+				</button>
+				<a href="/blog/entry/{{ blog.entry_id }}/delete/">
+					<div class="ui labeled icon red button" style="float: right;">
+						<i class="trash alternate icon"></i>
+						Delete
+					</div>
+				</a>
+			</form>
+			<br><br><br>
+		</div>
+	</div>
+	<div class="sixteen wide raised segments column">
+		<div class="ui segment">
+			<div style="padding: 0 20px;">
+				<h2 style="font-family: San Francisco;">Blog Preview</h2>
+				<div class="ui divider"></div>
+				<h1 style="font-family: San Francisco; font-size: 30px;" id="pre-blog-title"></h1>
+				<div class="ui divider"></div>
+				<p style="font-family: San Francisco; font-size: 18px;" id="pre-blog-content"></p>
+				<br><br><br><br><br>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

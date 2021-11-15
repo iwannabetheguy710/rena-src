@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/semantic.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+	<script type="text/javascript" src="{% static 'css/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'css/jquery.redirect.js' %}"></script>
+	<script type="text/javascript" src="{% static 'css/components/dropdown.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'css/components/transition.min.js' %}"></script>
+	<title>{% block title %} {% endblock %}</title>
+</head>
+{# background-image: url('{% static 'img/background.jpg' %}') #}
+<style type="text/css">
+h1, h2, h3, h4, h5, h6, input {font-family:San Francisco;}
+</style>
+
+<script>
+//$(document).bind("contextmenu",function(e) {e.preventDefault();});
+//$(document).keydown(function(e){if(e.which === 123){return false;}});
+MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']],displayMath: [ ['$$','$$'], ["\\[","\\]"] ],processEscapes: false,},svg: {fontCache: 'global'}};</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<body style="background-image: url('{% static 'img/background.png' %}')">
+	{% load static %}
+	{% load group_extras %}
+	<div class="ui secondary menu cointainer" style="height: 60px; font-size: 16px; box-shadow: 0 2px black; font-family: San Francisco;">
+		<a href="/" class="item" onmouseover="this.style.backgroundColor='inherit';"><img src="{% static 'img/luyencode.png' %}" style="height: 55px; width: auto;"></a>
+		<a href="/problemset/" class="item">PROBLEMSET</a>
+		<a href="#none" class="item">CONTESTS</a>
+		<a href="/ranking/" class="item">RANKING</a>
+		<a href="/blog/" class="item">BLOG</a>
+		<a href="/about/" class="item">ABOUT</a>
+		<div class="right menu">
+			{% if user.is_authenticated %}
+			<div class="ui dropdown item" id="prof-dropdown">
+				<div class="ui {{ role_ratings_color }} horizontal label">{{ role_ratings_role }}</div>
+				<a href="/profile/"><b style="color: black;">{{ user.username }}</b></a>
+				<div class="menu">
+					<a class="icon item" href="#"><i class="star icon"></i>Rating: {{ user_ratings }}</a>
+					<div class="ui divider"></div>
+					{% if user.is_superuser or user.is_staff %}
+					<a class="icon item" href="/admin"><i class="clipboard list icon"></i>Admin</a>
+					{% endif %}
+					<a class="icon item" href="/profile/"><i class="user icon"></i>Profile</a>
+					<a class="icon item" href="/profile/settings/"><i class="setting icon"></i>Settings</a>
+					<div class="ui divider"></div>
+					<a class="icon item" href="/logout/"><span style="color: red;"><i class="sign-out icon"></i>Logout</span></a>
+				</div>
+			</div>
+			{% else %}
+			<a href="/login/" class="ui item" style="background-color: #2185D0; color: white;">LOGIN</a>
+			<a href="/register/" class="ui item" style="background-color: #F2F2F2;">REGISTER</a>
+			{% endif %}
+		</div>
+	</div>
+	<br><br>
+	<div class="ui container">
+	{% block content %}
+	{% endblock %}
+	</div>
+	<br><br><br><br><br><br>
+	<footer style="text-align: center; font-family: San Francisco;">
+		Copyright by ^RENA 2021
+	</footer>
+	<br>
+</body>
+<script type="text/javascript">$("#prof-dropdown").dropdown();</script>
+</html>

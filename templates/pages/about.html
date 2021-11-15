@@ -1,0 +1,77 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: About
+{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load martortags %}
+<div class="ui grid" style="font-family: San Francisco;">
+	<div class="sixteen wide segments raised column">
+		<div class="ui segment">
+			<div style="padding: 15px 15px;">
+				<h1>Một vài nét sơ lược về hệ thống ^RENA</h1>
+				<div class="ui divider"></div>
+				<p style="font-size: 16px;">
+					Hệ thống ^RENA Online Judge được ra đời với mục đích mang lại cho các bạn một nền tảng lập trình thi đấu (Competitive programming) online, nhanh, mạnh. Với các bài tập đa dạng các bài tập, từ dễ tới khó và các dạng bài khác nhau. Vì vậy, ^RENA sẽ là một sự lựa chọn vô cùng tuyệt vời cho các bạn mới làm quen hay tiếp xúc với Competitive Programming.
+				</p>
+				<p style="font-size: 16px;">
+					<h3>Một vài chức năng cơ bản của hệ thống như:</h3>
+					<ul style="font-size: 16px;">
+						<li>Hệ thống chấm code tự động thông qua các test case trong bài.</li>
+						<br>
+						<li>Hệ thống blog và comment giúp các bạn có thể trao đổi, chia sẻ kiến thức với nhau thông qua các bài viết.</li>
+						<br>
+						<li>Hệ thống các kỳ thi tiêu chuẩn theo các format như ACM, OI, ...</li>
+						<br>
+						<li>Hệ thống xếp hạng thông qua hệ số Rating được tính sau mỗi kỳ thi.</li>
+					</ul>
+				</p>
+				<p>
+					<h3>Chi tiết về hệ thống xếp hạng:</h3>
+					<span style="font-size: 16px;">Hệ thống xếp hạng Rating được tính ngay sau khi một kỳ thi kết thúc (Rating chỉ được tính cho những người tham gia kỳ thi đó). Hệ thống tính toán Rating do chính tay em Nguyễn Văn Thắng nghiên cứu và phát triển. Hệ thống tính toán này tính Rating cho thí sinh dựa trên:</span>
+					<ul style="font-size: 16px;">
+						<li>Độ khó của bài tập.</li>
+						<br>
+						<li>Thời gian hoàn thành bài tập của thí sinh trong kỳ thi đó.</li>
+						<br>
+						<li>Số lần submit thất bại của thí sinh đó.</li>
+						<br>
+						<li>Thứ hạng của thí sinh trong kỳ thi đó ngay sau khi kỳ thi kết thúc.</li>
+					</ul>
+					<span style="font-size: 16px;">
+						Nhờ việc tính Rating dựa theo các thông số trên. Chúng tôi tin rằng điểm hệ số của bạn có thể đánh giá chính xác 85% năng lực của bạn (ít nhất là sau 10 kỳ thi) một cách công bằng, minh bạch.
+					</span>
+				</p>
+				<p>
+					<h3>Chi tiết về hệ thống xếp hạng</h3>
+					<ul style="font-size: 18px;">
+						<li><div class="ui gray horizontal label">Level 1&nbsp;&nbsp;</div> Rating từ 0 - 1199</li>
+						<li><div class="ui green horizontal label">Level 2&nbsp;&nbsp;</div> Rating từ 1200 - 1399</li>
+						<li><div class="ui teal horizontal label">Level 3&nbsp;&nbsp;</div> Rating từ 1400 - 1599</li>
+						<li><div class="ui blue horizontal label">Level 4&nbsp;&nbsp;</div> Rating từ 1600 - 1799</li>
+						<li><div class="ui purple horizontal label">Level 5&nbsp;&nbsp;</div> Rating từ 1800 - 1999</li>
+						<li><div class="ui violet horizontal label">Level 6&nbsp;&nbsp;</div> Rating từ 2000 - 2199</li>
+						<li><div class="ui olive horizontal label">Level 7&nbsp;&nbsp;</div> Rating từ 2200 - 2399</li>
+						<li><div class="ui yellow horizontal label">Level 8&nbsp;&nbsp;</div> Rating từ 2400 - 2599</li>
+						<li><div class="ui orange horizontal label">Level 9&nbsp;&nbsp;</div> Rating từ 2600 - 2799</li>
+						<li><div class="ui red horizontal label">Level 10</div> Rating từ 2800 trở lên</li>
+					</ul>
+					<span style="font-size: 16px;">
+						Các label xếp hạng này sẽ có trong profile của các bạn, trong trường hợp hệ thống không hiện label này, hệ thống sẽ gán màu tương ứng cho tên của các bạn.
+					</span>
+				</p>
+				<br>
+				<p style="font-size: 16px;">
+					Ngoài ra, chúng tôi vô cùng cảm ơn tới các Moderator từ các Blog Moderator tới các Problem Moderator hay Contest Moderator. Tất cả các bạn đều tuyệt vời như cách mà các bạn đã đóng góp của ^RENA.
+				</p>
+				<p style="font-size: 16px;">
+					Nhưng sự đóng góp của các Moderator sẽ không bao giờ đủ nếu thiếu đi các bạn, những người ngày ngày cày cuốc code trên website. Bạn là linh hồn của website giúp website đạt được tới ngày hôm nay. Rất mong rằng các bạn sẽ tiếp tục gắn bó lâu dài với ^RENA và tiếp tục nâng cao trình độ của bản thân nhé !
+				</p>
+				<br>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

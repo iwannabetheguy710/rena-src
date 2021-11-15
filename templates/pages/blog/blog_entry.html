@@ -1,0 +1,108 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% load martortags %}
+{% load group_extras %}
+
+{% block title %}
+^RENA Blog: {{ btitle }}
+{% endblock %}
+
+{% block content %}
+
+<div class="ui grid" style="font-family: San Francisco;">
+	<div class="sixteen wide segments raised column">
+		<div class="ui segment">
+			<div style="padding: 15px 30px;">
+				<h1 style="font-family: San Francisco; font-size: 30px;">
+					{{ btitle }}
+					{% if user.is_authenticated and user.username == bauthor.0.user.username %}
+						<span style="float: right; font-size: 16px;">
+							<a href="/blog/entry/{{ bentry }}/edit/">
+								<i class="edit icon"></i>
+								Edit
+							</a>
+						</span>
+						<span style="float: right;">&nbsp;&nbsp;</span>
+						<span style="float: right; font-size: 16px;">
+							<a href="/blog/entry/{{ bentry }}/delete/" style="color: red;">
+								<i class="trash alternate icon"></i>
+								Delete
+							</a>
+						</span>
+					{% endif %}
+				</h1>
+				<label style="float: right;">
+					{{ bpublish }}
+				</label>
+				<span style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<label style="float: right;">
+					<i class="eye icon"></i>
+					{{ bviewer }}
+				</label>
+				<p>
+					by&nbsp;
+					<b><a href="/profile/{{ bauthor.0 }}/" style="color: {{ bauthor.1 }};">{{ bauthor.0 }}</a>&nbsp;</b>
+				</p>
+				<div class="ui divider"></div>
+				<span style="font-size: 16px;">{{ bcontent | safe_markdown }}</span>
+			</div>
+
+			{% if user.is_superuser or user.is_staff or user|has_group:"Blog Moderator" %}
+			<div class="ui divider"></div>
+			<span style="float: right; font-size: 16px;">
+				<a href="/blog/entry/{{ bentry }}/nfauthorize/">
+					<button class="ui right labeled icon green {% if bnewfeed %}disabled {% endif %}button" style="font-family: San Francisco; width: 200px;">
+						<i class="right {% if bnewfeed %} checkmark {% else %} share {% endif %} icon"></i>
+						{% if bnewfeed %} Posted ! {% else %} Post On New Feed {% endif %}
+					</button>
+				</a>
+			</span>
+			<br>
+			{% endif %}
+			<br>
+		</div>
+		{% if user.is_authenticated %}
+		<div class="ui segment">
+			<h2 style="font-family: San Francisco;">Comment Box</h2>
+			<span style="font-size: 16px;">Write your own comment, or listen other comment</span>
+			<div class="ui divider"></div>
+			<form class="ui form" action="/blog/entry/{{ bentry }}/comment/" method="post">
+				{% csrf_token %}
+				<div class="field">
+					<label style="font-size: 16px;">Comment:</label>
+					<textarea id="cmt-content" name="cmt_content" style="font-family: San Francisco; font-size: 16px;" placeholder="Write your comment here. You can use markdown format." requied></textarea>
+				</div>
+				<button id="cmt-submit" type="submit" class="ui right labeled icon blue button" style="font-family: San Francisco; float: right;">
+					<i class="right comment icon"></i>
+					Comment
+				</button>
+			</form>
+			<br><br>
+		</div>
+		{% endif %}
+		<div id="comment-list">
+			{% for cmt in bcomment %}
+			<div class="ui segment">
+				<h4>
+					Comment by 
+					<span style="color: {{ cmt.author.color }};">{{ cmt.author }}</span>
+					{% if user.is_superuser or user.is_staff or user|has_group:"Blog Moderator" %}
+					<span style="float: right; font-size: 16px;">
+						<a href="/blog/entry/{{ bentry }}/comment/{{ cmt.comment_id }}/delete/" style="color: red;">
+							<i class="trash alternate icon"></i>
+							Delete
+						</a>
+					</span>
+					{% endif %}
+				</h4>
+				<div class="ui divider"></div>
+				<span style="font-size: 16px;">{{ cmt.comment_description|safe_markdown }}</span>
+				<br><br>
+				<span style="color: grey; float: right;">{{ cmt.publish_date }}</span>
+				<br>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}

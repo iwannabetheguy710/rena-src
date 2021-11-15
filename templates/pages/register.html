@@ -1,0 +1,45 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: Register
+{% endblock %}
+
+{% block content %}
+<div class="ui centered grid">
+	<form class="ui large form error" action="/register/" method="post" style="width: 500px;">
+		{% csrf_token %}
+		<div class="field">
+			<label style="text-align: left;">Username:</label>
+			<input style="font-family: San Francisco;" type="text" name="usr_name" placeholder="Username" required>
+		</div>
+		<div class="field">
+			<label style="text-align: left;">Email:</label>
+			<input style="font-family: San Francisco;" type="email" name="usr_email" placeholder="Email (this field required for your password reset)">
+		</div>
+		<div class="field">
+			<label style="text-align: left;">Password:</label>
+			<input style="font-family: San Francisco;" type="password" name="usr_passwd" placeholder="Password" required>
+		</div>
+		<div class="field">
+			<label style="text-align: left;">Re-type password:</label>
+			<input style="font-family: San Francisco;" type="password" name="usr_re_passwd" placeholder="Re-type password" required>
+		</div>
+		<p>By registering, you agree to the terms and conditions</p>
+		{% if msg_err %}
+		<div class="ui error message" style="text-align: left; font-family: San Francisco;">
+			<div class="header">Registration Error</div>
+			{{ msg_err }}
+		</div>
+		{% else %}
+		<div class="ui success message" style="text-align: left; font-family: San Francisco;">
+			<div class="header">Registration Complete !</div>
+			Now, you can login at login page or click this <a href="/login/">link</a>
+		</div>
+		{% endif %}
+		<button class="ui right labeled  icon blue button" style="font-family: San Francisco;">
+			<i class="right checkmark icon"></i>
+			Register
+		</button>
+	</form>
+</div>
+{% endblock %}

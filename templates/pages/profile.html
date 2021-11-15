@@ -1,0 +1,132 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}
+^RENA: {{ prof_user }}
+{% endblock %}
+
+{% block content %}
+<div class="ui one column centered grid" style="font-family: San Francisco;">
+	<div class="ui two segments raised column" style="background-color: white;">
+		<div class="ui segment">
+			<b style="font-size: 18px;">Profile User: </b>
+			<b style="font-size: 18px;">
+				{% if prof_lastname and prof_firstname %}
+				{{ prof_lastname }} "<span style="color: {{ prof_color }};">{{ prof_user }}</span>" {{ prof_firstname }}
+				{% else %}
+				<span style="color: {{ prof_color }};">{{ prof_user }}</span>
+				{% endif %}
+			</b>
+			<div class="ui {{ prof_color }} horizontal label">{{ prof_role }}</div>
+			<b style="font-size: 18px; float: right;">
+				{% if prof_slogan %}
+				{{ prof_slogan }}
+				{% endif %}
+			</b>
+		</div>
+		<div class="ui segment" style="font-size: 17px;">
+			<br>
+			<div class="ui center aligned grid">
+				<div class="ui statistics">
+					<div class="{{ prof_color }} statistic">
+						<div class="label" style="font-family: San Francisco;">rating</div>
+						<div class="value" style="font-family: San Francisco;"><b>{{ prof_ratings }}</b></div>
+						<div class="label" style="font-family: San Francisco;">({{ prof_role }})</div>
+					</div>
+					<div class="statistic">
+						<div class="label" style="font-family: San Francisco;">participated</div>
+						<div class="value" style="font-family: San Francisco;"><b>{{ prof_match }}</b></div>
+						<div class="label" style="font-family: San Francisco;">contest</div>
+					</div>
+					<div class="statistic">
+						<div class="label" style="font-family: San Francisco;">win</div>
+						<div class="value" style="font-family: San Francisco;"><b>{{ prof_win }}</b></div>
+						<div class="label" style="font-family: San Francisco;">contest</div>
+					</div>
+					<div class="statistic">
+						<div class="label" style="font-family: San Francisco;">winning rate</div>
+						<div class="value" style="font-family: San Francisco;"><b>{{ prof_ratio }}%</b></div>
+						<div class="label" style="font-family: San Francisco;">contest joined</div>
+					</div>
+					<div class="statistic">
+						<div class="label" style="font-family: San Francisco;">solved</div>
+						<div class="value" style="font-family: San Francisco;"><b>{{ prof_solved }}</b></div>
+						<div class="label" style="font-family: San Francisco;">problems</div>
+					</div>
+					<div class="{% if prof_diff.0 == '+' %} green {% elif prof_diff.0 == '-' %} red {% else %} grey {% endif %}statistic">
+						<div class="label" style="font-family: San Francisco;">last status</div>
+						<div class="value" style="font-family: San Francisco;"><b>{{ prof_diff }}</b></div>
+						<div class="label" style="font-family: San Francisco;">rating</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="ui segment">
+			<b>
+				{#Last 10 match status: #}
+				{% for stat in prof_last10stat %}
+				{#<span style="color: {% if stat == 'W' %} green {% elif stat == 'L' %} red {% else %} grey {% endif %};">{{ stat }}</span>#}
+				{% endfor %}
+			</b>
+		</div>
+		{% if prof_facebook or prof_github %}
+		<div class="ui segment">
+			<h3>
+				<span style="color: {{ prof_color }};">{{ prof_user }}</span>'s social: 
+				{% if prof_facebook %}
+				<a href="{{ prof_facebook }}" target="blank">
+					<button class="ui facebook button" style="font-family: San Francisco;">
+						<i class="facebook icon"></i>
+						Facebook
+					</button>
+				</a>
+				{% endif %}
+				{% if prof_github %}
+				<a href="{{ prof_github }}" target="blank">
+					<button class="ui black button" style="font-family: San Francisco;">
+						<i class="github icon"></i>
+						Github
+					</button>
+				</a>
+				{% endif %}
+			</h3>
+		</div>
+		{% endif %}
+	</div>
+	<div class="ui three column centered row">
+		<div class="ui segment raised column">
+			<b style="font-size: 18px;">Newest Problems</b><br>
+			<ul>
+			{% for p in user_problem %}
+				<li style="font-size: 16px;"><a href="/problem/{{ p.problem_id }}/">{{ p.title }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class="ui segment raised column">
+			<b style="font-size: 18px;">
+				Newest Blogs
+			</b>
+			{% if user.is_authenticated and user.username == prof_user %}
+			<a href="/blog/new/" style="font-size: 14px; float: right;">
+				<i class="ui add icon"></i>
+				New Blog
+			</a>
+			{% endif %}
+			<ul>
+				{% for b in user_blog %}
+				<li style="font-size: 16px;">
+					<a href="/blog/entry/{{ b.entry_id }}/">
+					{{ b.title }}
+					</a>
+
+					{% if user.is_authenticated and user.username == prof_user %}
+					|
+					<a href="/blog/entry/{{ b.entry_id }}/edit/">Edit</a>
+					{% endif %}
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
